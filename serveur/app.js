@@ -33,10 +33,12 @@ const front = new API.httpStrategies.Express(controller, docs);
 
 const apiReqHandler = front.apiRequest.bind(front);
 
+
+
 app.use(function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Cache-Control, Authorization');
+    'Origin, X-Requested-With, Content-Type, Accept, Cache-Control');
   res.header('Access-Control-Allow-Methods',
     'POST, GET, PATCH, DELETE, OPTIONS, PUT');
   next();

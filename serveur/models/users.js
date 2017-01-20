@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 const userSchema = Schema({
-  pseudo: {type: String, required: true},
-  password: {type: String, required: true},
+  pseudo: {type: String},
+  password: {type: String},
   token: {type: String},
   movies: [{type: ObjectId, ref: 'Movie'}],
   tvshows: [{type: ObjectId, ref: 'Tvshow'}],
