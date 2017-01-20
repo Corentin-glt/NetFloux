@@ -6,6 +6,7 @@ const ObjectId = Schema.Types.ObjectId;
 const userSchema = Schema({
   title: {type: String, required: true},
   dateAdd: {type: Date, default: Date.now},
+  addBy: {type: ObjectId, ref: 'User'},
   dateProduction: {type: Date, required: true},
   actors: [{type: String, required: true}],
   category: [{type: String, required: true}],
