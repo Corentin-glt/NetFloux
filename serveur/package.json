@@ -1,0 +1,48 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gillot Boun Billot",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "json-api": "^2.15.7",
+    "jsonwebtoken": "^7.2.1",
+    "mongoose": "^4.7.7",
+    "mongoose-type-email": "^1.0.2",
+    "morgan": "^1.7.0",
+    "uuid": "^3.0.1"
+  },
+  "xo": {
+    "esnext": true,
+    "envs": [
+      "browser",
+      "node"
+    ],
+    "space": 2,
+    "rules": {
+      "max-len": [
+        "error",
+        80,
+        2
+      ],
+      "new-cap": 0,
+      "camelcase": [
+        "off",
+        {
+          "properties": "never"
+        }
+      ],
+      "quotes": 0,
+      "quote-props": 0,
+      "no-unused-vars": 0,
+      "prefer-arrow-callback": 0
+    }
+  }
+}
