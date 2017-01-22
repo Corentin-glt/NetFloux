@@ -3,20 +3,25 @@
  */
 import React from 'react';
 import ContainerSearch from '../Search/ContainerSearch';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react';
+import { browserHistory } from 'react-router';
 
 export default class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeItem: 'Movies'
+      activeItem: ''
     };
     this.handleItemClick = this.handleItemClick.bind(this);
   }
 
   handleItemClick(e, {name}){
-    console.log(name);
     this.setState({ activeItem: name });
+    browserHistory.push('/'+ name);
+  }
+
+  login(){
+
   }
 
   render(){
@@ -24,16 +29,23 @@ export default class Home extends React.Component {
     return(
       <div className="Home">
         <Menu pointing secondary>
-          <Menu.Item name='Movies'
-                     active={activeItem === 'Movies'}
+          <Menu.Item name='Movie'
+                     active={activeItem === 'Movie'}
                      onClick={this.handleItemClick}>
           </Menu.Item>
-          <Menu.Item name='Tv-Shows'
-                     active={activeItem === 'Tv-Shows'}
+          <Menu.Item name='TvShow'
+                     active={activeItem === 'TvShow'}
                      onClick={this.handleItemClick}>
           </Menu.Item>
+          <Menu.Menu position='right'>
+            <Button icon="sign in"
+                    color="green"
+                    circular
+                    onClick={this.login}
+                    />
+          </Menu.Menu>
         </Menu>
-        <ContainerSearch/>
+        {this.props.children}
       </div>
     )
   }

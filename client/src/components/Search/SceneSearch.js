@@ -11,7 +11,7 @@ export default class SceneSearch extends React.Component{
         <Form>
           <Form.Group>
             <Form.Field>
-              <label>Movie's title</label>
+              <label>{this.props.typeNeed}'s title</label>
               <Form.Input type="text"
                      placeholder="Title"
                      onChange={this.props.updateTitle}>

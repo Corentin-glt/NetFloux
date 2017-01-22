@@ -10,6 +10,7 @@ export default class ContainerSearch extends React.Component {
   constructor(props){
     super(props);
     this.state = {
+      typeNeed: this.props.typeNeed,
       titleSearch: '',
       dateAddSearch: new Date(),
       dateProductionSearch: new Date(),
@@ -35,13 +36,14 @@ export default class ContainerSearch extends React.Component {
     this.setState({categorySearch: category.target.value});
   }
   onSubmit(){
-    console.log('yolo');
+    console.log(this.state.typeNeed);
     browserHistory.push('/');
   }
   render(){
     return (
       <div className="ContainerSearch">
         <SceneSearch
+          typeNeed={this.state.typeNeed}
           updateTitle={this.updateTitleSearch}
           updateAddedDate={this.updateDateAddSearch}
           valueDateAdded={this.state.dateAddSearch}
