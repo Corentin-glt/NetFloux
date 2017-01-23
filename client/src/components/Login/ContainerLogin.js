@@ -3,8 +3,11 @@
  */
 import React from 'react';
 import SceneLogin from './SceneLogin';
+import { browserHistory } from 'react-router';
+import * as userAction from '../../actions/userAction';
+import {connect} from 'react-redux';
 
-export default class ContainerLogin extends React.Component{
+class ContainerLogin extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -38,8 +41,16 @@ export default class ContainerLogin extends React.Component{
   }
 
   login(){
-    console.log('Pseudo: '+this.state.pseudo+ '\n' +
-      'Password: ' +this.state.password);
+    let user = {
+      pseudo: this.state.pseudo,
+      password: this.state.password
+    };
+    this.props.login(user).then(() => {
+      this.handleClose();
+      console.log(this.props.user);
+      browserHistory.push('/');
+    })
+      .catch(err => console.log(err));
   }
 
   render(){
@@ -56,3 +67,16 @@ export default class ContainerLogin extends React.Component{
     )
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    login: user => dispatch(userAction.login(user))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContainerLogin);

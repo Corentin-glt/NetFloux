@@ -11,7 +11,7 @@ import configureStore from './store/configureStore';
 const store = configureStore();
 
 render (
-  <Provider store={store} >
+  <Provider store={store}>
     <Root history={browserHistory}/>
   </Provider>,
   document.getElementById('app')

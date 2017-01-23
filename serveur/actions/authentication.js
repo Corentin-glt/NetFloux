@@ -14,6 +14,7 @@ module.exports = {
       .then(user => {
         if (user) {
           res.status(200).send({
+            user: user,
             access_token: token,
             account_id: user.id,
             message: 'Enjoy your token!'

@@ -4,16 +4,21 @@
 import React from 'react';
 import ContainerLogin from '../Login/ContainerLogin';
 import ContainerRegister from '../Register/ContainerRegister';
-import { Menu, Button } from 'semantic-ui-react';
+import { Menu } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
+import * as userAction from '../../actions/userAction';
+import {connect} from 'react-redux';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      activeItem: 'Movie'
+      activeItem: 'Movie',
+      logged: false,
     };
     this.handleItemClick = this.handleItemClick.bind(this);
+    this.isLogin = this.isLogin.bind(this);
+
   }
 
   handleItemClick(e, {name}){
@@ -21,7 +26,18 @@ export default class Home extends React.Component {
     browserHistory.push('/'+ name);
   }
 
+  isLogin(){
+    this.setState({logged: !!localStorage.acces_token});
+  }
+
   render(){
+    this.isLogin;
+    let containerLog;
+    if(this.state.logged){
+      containerLog = <ContainerRegister/>
+    } else {
+      containerLog = <ContainerLogin/>
+    }
     return(
       <div className="Home">
         <Menu pointing secondary>
@@ -34,8 +50,7 @@ export default class Home extends React.Component {
                      onClick={this.handleItemClick}>
           </Menu.Item>
           <Menu.Menu position='right'>
-            <ContainerLogin/>
-            <ContainerRegister/>
+            {containerLog}
           </Menu.Menu>
         </Menu>
         {this.props.children}
@@ -43,3 +58,16 @@ export default class Home extends React.Component {
     )
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUserByToken: access_token => dispatch(userAction.fetchUserByToken(access_token))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

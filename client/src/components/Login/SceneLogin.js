@@ -34,10 +34,16 @@ export default class SceneLogin extends React.Component{
                             onChange={this.props.updatePassword}/>
               </Form.Field>
             </Form>
+            <br/>
             <Modal.Actions>
-              <Button positive
-                      onClick={this.props.sendLogin}>
-                      Login</Button>
+              <Button.Group>
+                <Button onClick={this.props.handleClose}>
+                  Cancel</Button>
+                <Button.Or />
+                <Button positive
+                        onClick={this.props.sendLogin}>
+                  Save</Button>
+              </Button.Group>
             </Modal.Actions>
           </Modal.Content>
         </Modal>
