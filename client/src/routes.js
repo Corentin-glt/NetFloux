@@ -6,8 +6,10 @@ import Home from './components/Home/Home';
 import Movie from './components/Movie/Movie';
 import TvShow from './components/TvShow/TvShow';
 import Profile from './components/Profile/ContainerProfile';
+import Register from './components/Register/ContainerRegister';
 import Login from './components/Login/ContainerLogin';
 import {Router, Route} from 'react-router';
+import AddMovie from './components/Profile/AddMovie/ContainerAddMovie';
 
 export default class Root extends React.Component {
   render(){
@@ -17,7 +19,10 @@ export default class Root extends React.Component {
           <Route path='/Movie' component={Movie}/>
           <Route path='/TvShow' component={TvShow}/>
           <Route path='/Login' component={Login}/>
-          <Route path='/Profile' component={Profile} onEnter={requireAuth}/>
+          <Route path='/Register' component={Register}/>
+          <Route path='/Profile' component={Profile} onEnter={requireAuth}>
+            <Route path='/AddMovie' component={AddMovie}/>
+          </Route>
         </Route>
       </Router>
     )

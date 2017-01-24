@@ -2,7 +2,6 @@
  * Created by corentin on 21/01/17.
  */
 import React, {PropTypes} from 'react';
-import ContainerLogin from '../Login/ContainerLogin';
 import ContainerRegister from '../Register/ContainerRegister';
 import { Menu, Button } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
@@ -17,6 +16,9 @@ class Home extends React.Component {
     };
     this.handleItemClick = this.handleItemClick.bind(this);
     this.renderLogin = this.renderLogin.bind(this);
+    this.renderLogout = this.renderLogout.bind(this);
+    this.renderProfile = this.renderProfile.bind(this);
+    this.renderRegister = this.renderRegister.bind(this);
   }
 
   handleItemClick(e, {name}){
@@ -28,23 +30,47 @@ class Home extends React.Component {
   renderLogin(){
     browserHistory.push('/Login');
   }
+
   renderLogout(){
-    this.props.logout(this.props.user);
+    let user = {
+      token: localStorage.access_token
+    };
+    this.props.logout(user);
   }
+
+  renderProfile(){
+    browserHistory.push('/Profile');
+  }
+
+  renderRegister(){
+    browserHistory.push('/Register');
+  }
+
   render(){
     let buttonIsLogged;
-    let buttonRegister;
-    console.log(this.props.user);
+    let buttonProfile;
     if (!this.props.user.session){
-      buttonIsLogged = <Button icon="sign in"
-                               color="green" circular
-                               onClick={this.renderLogin}/>;
-      buttonRegister = <ContainerRegister/>
+      buttonIsLogged =
+        <Button.Group>
+          <Button icon="sign in"
+                  onClick={this.renderLogin}/>
+          <Button icon="add user"
+                  onClick={this.renderRegister}/>
+        </Button.Group>;
 
     } else {
-      buttonIsLogged = <Button icon="sign out"
-                               color="red" circular
-                               onClick={this.renderLogout}/>;
+      buttonIsLogged =
+        <Button.Group>
+          <Button icon="power"
+                  onClick={this.renderLogout}/>
+          <Button icon="cogs"
+                  onClick={this.renderProfile}/>
+        </Button.Group>;
+      buttonProfile =
+        <Menu.Item name='Profile'
+                   active={this.state.activeItem === 'Profile'}
+                   onClick={this.handleItemClick}>
+      </Menu.Item>
     }
     return(
       <div className="Home">
@@ -57,9 +83,9 @@ class Home extends React.Component {
                      active={this.state.activeItem === 'TvShow'}
                      onClick={this.handleItemClick}>
           </Menu.Item>
+          {buttonProfile}
           <Menu.Menu position='right'>
             {buttonIsLogged}
-            {buttonRegister}
           </Menu.Menu>
         </Menu>
         {this.props.children}
@@ -67,10 +93,6 @@ class Home extends React.Component {
     )
   }
 }
-
-Home.propTypes = {
-  actions: PropTypes.object.isRequired
-};
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -80,7 +102,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUserByToken: access_token => dispatch(userAction.fetchUserByToken(access_token)),
+    fetchUserById: user => dispatch(userAction.fetchUserById(user)),
     logout: user => dispatch(userAction.logout(user))
   }
 };

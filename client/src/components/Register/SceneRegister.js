@@ -17,9 +17,6 @@ export default class SceneRegister extends React.Component{
     return(
       <div className="SceneRegister">
         <Modal
-          trigger={<Button icon="add user"
-                           color="green" circular
-                           onClick={this.props.handleOpen}/>}
           open={this.props.modalOpen}
           onOpen={this.props.handleOpen}
           onClose={this.props.handleClose}

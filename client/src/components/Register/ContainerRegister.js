@@ -11,7 +11,7 @@ class ContainerRegister extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      modalOpen: false,
+      modalOpen: true,
       username: '',
       password: '',
       password2: '',
@@ -30,7 +30,7 @@ class ContainerRegister extends React.Component{
   }
 
   handleClose(){
-    this.setState({modalOpen: false});
+    browserHistory.push('/');
   }
 
   updateUsername(username){

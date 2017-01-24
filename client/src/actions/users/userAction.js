@@ -52,7 +52,7 @@ export const login = (user) => {
     return requestApi.loginRequest(user)
       .then(response => {
         localStorage.setItem('access_token', response.data.access_token);
-        dispatch(loginSuccess(response.data.user))
+        dispatch(loginSuccess(response.data))
       })
       .catch(error => {
         throw(error);
@@ -60,9 +60,9 @@ export const login = (user) => {
   };
 };
 
-export const fetchUserByToken = (access_token) => {
+export const fetchUserById = (user) => {
   return (dispatch) => {
-    return Axios.get(usersUrl, access_token)
+    return requestApi.getByIdRequest('users', user.id)
       .then((response) => {
         console.log(response.data);
         dispatch(fetchUserSuccess(response.data));

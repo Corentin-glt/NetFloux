@@ -6,6 +6,7 @@ export default {
   episodes: [],
   tvshows: [],
   user: {
+    data: '',
     token: '',
     id: '',
     session: !!localStorage.access_token

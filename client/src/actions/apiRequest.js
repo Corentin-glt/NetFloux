@@ -83,11 +83,5 @@ export function loginRequest(user) {
 }
 
 export function logoutRequest(user) {
-  return Axios({
-    url: `${configUrl}/users/logout`,
-    timeout: 20000,
-    method: 'post',
-    data: user,
-    responseType: 'json'
-  });
+  return Axios.post(`${configUrl}/users/logout`, user);
 }
