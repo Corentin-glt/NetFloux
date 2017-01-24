@@ -3,7 +3,7 @@
  */
 import React from'react';
 import SceneRegister from './SceneRegister';
-import * as userAction from '../../actions/userAction';
+import * as userAction from '../../actions/users/userAction';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
 

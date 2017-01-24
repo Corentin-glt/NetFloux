@@ -2,17 +2,18 @@
  * Created by corentin on 22/01/17.
  */
 import React from 'react';
-import { Form, Button, Modal, Header } from 'semantic-ui-react';
+import { Form, Button, Modal, Header, Message} from 'semantic-ui-react';
 
 export default class SceneLogin extends React.Component{
 
   render(){
+    let labelErrorMessage;
+    if (this.props.errorMessage){
+      labelErrorMessage = <Message warning>{this.props.errorMessage}</Message>
+    }
     return(
       <div className="SceneLogin">
         <Modal
-          trigger={<Button icon="sign in"
-                           color="green" circular
-                           onClick={this.props.handleOpen}/>}
           open={this.props.modalOpen}
           onOpen={this.props.handleOpen}
           onClose={this.props.handleClose}
@@ -34,6 +35,7 @@ export default class SceneLogin extends React.Component{
                             onChange={this.props.updatePassword}/>
               </Form.Field>
             </Form>
+            {labelErrorMessage}
             <br/>
             <Modal.Actions>
               <Button.Group>

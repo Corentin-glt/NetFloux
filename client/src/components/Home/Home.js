@@ -1,12 +1,12 @@
 /**
  * Created by corentin on 21/01/17.
  */
-import React from 'react';
+import React, {PropTypes} from 'react';
 import ContainerLogin from '../Login/ContainerLogin';
 import ContainerRegister from '../Register/ContainerRegister';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Button } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
-import * as userAction from '../../actions/userAction';
+import * as userAction from '../../actions/users/userAction';
 import {connect} from 'react-redux';
 
 class Home extends React.Component {
@@ -14,11 +14,9 @@ class Home extends React.Component {
     super(props);
     this.state = {
       activeItem: 'Movie',
-      logged: false,
     };
     this.handleItemClick = this.handleItemClick.bind(this);
-    this.isLogin = this.isLogin.bind(this);
-
+    this.renderLogin = this.renderLogin.bind(this);
   }
 
   handleItemClick(e, {name}){
@@ -26,17 +24,27 @@ class Home extends React.Component {
     browserHistory.push('/'+ name);
   }
 
-  isLogin(){
-    this.setState({logged: !!localStorage.acces_token});
-  }
 
+  renderLogin(){
+    browserHistory.push('/Login');
+  }
+  renderLogout(){
+    this.props.logout(this.props.user);
+  }
   render(){
-    this.isLogin;
-    let containerLog;
-    if(this.state.logged){
-      containerLog = <ContainerRegister/>
+    let buttonIsLogged;
+    let buttonRegister;
+    console.log(this.props.user);
+    if (!this.props.user.session){
+      buttonIsLogged = <Button icon="sign in"
+                               color="green" circular
+                               onClick={this.renderLogin}/>;
+      buttonRegister = <ContainerRegister/>
+
     } else {
-      containerLog = <ContainerLogin/>
+      buttonIsLogged = <Button icon="sign out"
+                               color="red" circular
+                               onClick={this.renderLogout}/>;
     }
     return(
       <div className="Home">
@@ -50,7 +58,8 @@ class Home extends React.Component {
                      onClick={this.handleItemClick}>
           </Menu.Item>
           <Menu.Menu position='right'>
-            {containerLog}
+            {buttonIsLogged}
+            {buttonRegister}
           </Menu.Menu>
         </Menu>
         {this.props.children}
@@ -58,6 +67,11 @@ class Home extends React.Component {
     )
   }
 }
+
+Home.propTypes = {
+  actions: PropTypes.object.isRequired
+};
+
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user
@@ -66,7 +80,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUserByToken: access_token => dispatch(userAction.fetchUserByToken(access_token))
+    fetchUserByToken: access_token => dispatch(userAction.fetchUserByToken(access_token)),
+    logout: user => dispatch(userAction.logout(user))
   }
 };
 

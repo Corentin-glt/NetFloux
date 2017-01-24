@@ -3,17 +3,18 @@
  */
 import React from 'react';
 import SceneLogin from './SceneLogin';
+import * as userAction from '../../actions/users/userAction';
 import { browserHistory } from 'react-router';
-import * as userAction from '../../actions/userAction';
 import {connect} from 'react-redux';
 
 class ContainerLogin extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      modalOpen: false,
+      modalOpen: true,
       pseudo: '',
       password: '',
+      errorMessage: null
     };
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
@@ -27,16 +28,14 @@ class ContainerLogin extends React.Component{
   }
 
   handleClose(){
-    this.setState({modalOpen: false});
+    browserHistory.push('/');
   }
 
-  updatePseudo(e){
-    e.preventDefault();
-    this.setState({pseudo: e.target.value});
+  updatePseudo(pseudo){
+    this.setState({pseudo: pseudo.target.value});
   }
 
   updatePassword(password){
-    console.log(password);
     this.setState({password: password.target.value});
   }
 
@@ -46,17 +45,15 @@ class ContainerLogin extends React.Component{
       password: this.state.password
     };
     this.props.login(user).then(() => {
-      this.handleClose();
-      console.log(this.props.user);
-      browserHistory.push('/');
     })
-      .catch(err => console.log(err));
+      .catch(err => this.setState({errorMessage: "Wrong pseudo or password!"}));
   }
 
   render(){
     return(
       <div className="ContainerLogin">
         <SceneLogin
+          errorMessage={this.state.errorMessage}
           modalOpen={this.state.modalOpen}
           handleOpen={this.handleOpen}
           handleClose={this.handleClose}
