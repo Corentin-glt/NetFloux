@@ -4,6 +4,7 @@
 import React from 'react';
 import SceneProfile from './SceneProfile';
 import * as userAction from '../../actions/users/userAction';
+import * as moviesAction from '../../actions/movies/moviesAction';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -28,9 +29,11 @@ class ContainerProfile extends React.Component {
     };
     this.props.fetchUserByToken(user)
       .then(() => {
-        this.setState({pseudo: this.props.user.data.pseudo});
-        this.setState({moviesAdded: this.props.user.data.movies});
-        this.setState({seriesAdded: this.props.user.data.tvshows});
+        this.props.fetchAllMovieByUser(this.props.user).then(() => {
+          this.setState({pseudo: this.props.user.data.pseudo});
+          this.setState({moviesAdded: this.props.movies});
+          this.setState({seriesAdded: this.props.user.data.tvshows});
+        });
     })
   }
 
@@ -50,13 +53,15 @@ class ContainerProfile extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user
+    user: state.user,
+    movies: state.movies
   }
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user))
+    fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user)),
+    fetchAllMovieByUser: user => dispatch(moviesAction.fetchAllMovieByUser(user))
   }
 };
 

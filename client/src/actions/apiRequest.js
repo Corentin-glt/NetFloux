@@ -4,7 +4,7 @@
 import Axios from 'axios';
 import Qs from 'qs';
 import config from '../../config/configServer';
-
+import querystring from 'querystring';
 const configUrl = config.apiUrl;
 
 export function postRequest(typeToFind, data){
@@ -53,8 +53,7 @@ export function getByIdRequest(typeToFind, id){
     responseType: 'json'
   })
 }
-
-export function getRequest(typeToFind, filter){
+export function getRequest(typeToFind, filter, include){
   return Axios({
     method: 'get',
     url: `${configUrl}/${typeToFind}`,
@@ -62,14 +61,17 @@ export function getRequest(typeToFind, filter){
       'Content-Type': 'application/json'
     },
     params: {
-      filter
+      filter,
+      include
     },
-    paramsSerializer: params => {
+    paramsSerializer: function(params) {
       return Qs.stringify(params, {arrayFormat: 'brackets'})
     },
     responseType: 'json'
-  });
+  })
+
 }
+
 export function postByTokenRequest(user) {
   return Axios.post(`${configUrl}/users/token`, user);
 }

@@ -12,17 +12,43 @@ export const createMovieSuccess = (movie) => {
   }
 };
 
+export const fetchAllMovieByUserSuccess = (movies) => {
+  return {
+    type: C.FETCH_MOVIES_SUCCESS,
+    movies
+  }
+};
+
 export const createMovie = (movie) => {
   return(dispatch) => {
     const data = movieSerializer.serialize(movie);
     return requestApi.postRequest('movies', data)
       .then(response => {
-        console.log(response.data);
+        return movieSerializer.deserialize(response.data)
+          .then((response) => {
+            dispatch(createMovieSuccess(response));
+          })
+          .catch(err => {throw(err)});
       })
       .catch(err => {
         console.log(err);
         throw(err);
       })
+  }
+};
+
+export const fetchAllMovieByUser = (user) => {
+  return(dispatch) => {
+    let filter = {simple: {users: {_id: user.data._id}}};
+    return requestApi.getRequest('movies', filter, 'users')
+      .then((response) => {
+        let moviesTab = [];
+        response.data.data.map(movie => {
+          moviesTab.push(movie.attributes);
+        });
+        dispatch(fetchAllMovieByUserSuccess(moviesTab));
+    })
+      .catch(err => {throw(err)});
   }
 };
 

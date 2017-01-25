@@ -5,7 +5,14 @@ import Promise from 'bluebird';
 import {Serializer, Deserializer} from 'jsonapi-serializer';
 
 const _Deserializer = new Deserializer({
-  keyForAttribute: 'camelCase'
+  keyForAttribute: 'camelCase',
+  users: {
+    valueForRelationship: function(relationship) {
+      return {
+        id: relationship.id
+      }
+    }
+  }
 });
 _Deserializer.deserialize = Promise.promisify(_Deserializer.deserialize);
 
@@ -15,7 +22,7 @@ export const movieSerializer = {
       keyForAttribute: 'camelCase',
       attributes: [
         'title',
-        'addBy',
+        'users',
         'dateProduction',
         'actors',
         'category',
@@ -25,7 +32,7 @@ export const movieSerializer = {
         // sometimes this returns undefined
         return data.customType;
       },
-      addBy: {
+      users: {
         ref: 'id',
         included: false
       }

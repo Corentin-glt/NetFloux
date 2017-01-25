@@ -3,6 +3,7 @@
  */
 import React from'react';
 import SceneAddMovie from './SceneAddMovie';
+import * as moviesAction from '../../../actions/movies/moviesAction';
 import * as userAction from '../../../actions/users/userAction';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
@@ -68,10 +69,11 @@ class ContainerAddMovie extends React.Component{
         actors: [this.state.actor],
         linkDownload: this.state.link,
         category: this.state.category,
-        addBy: this.props.user.id
+        users: {
+          id: this.props.user.data._id,
+        }
       };
-      console.log(newMovie);
-      browserHistory.push('/Profile');
+      this.props.createMovie(newMovie);
     } else {
       this.setState({errorMessage: "Please valid all champs"})
     }
@@ -107,7 +109,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: user => dispatch(userAction.login(user))
+    login: user => dispatch(userAction.login(user)),
+    createMovie: movie => dispatch(moviesAction.createMovie(movie))
   }
 };
 

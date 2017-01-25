@@ -10,7 +10,7 @@ export default class SceneProfile extends React.Component {
       <div className="SceneProfile">
         <h1>It's you {this.props.pseudo}</h1>
         <p>You have added {this.props.seriesAdded} series !</p>
-        <p>And {this.props.moviesAdded} film</p>
+        <p>And {this.props.moviesAdded} films</p>
         <Button.Group attached='top' vertical>
           <Button onClick={this.props.addMovie}>Add movies</Button>
           <Button>Add series</Button>
