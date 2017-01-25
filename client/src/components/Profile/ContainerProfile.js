@@ -5,6 +5,7 @@ import React from 'react';
 import SceneProfile from './SceneProfile';
 import * as userAction from '../../actions/users/userAction';
 import * as moviesAction from '../../actions/movies/moviesAction';
+import SceneMovie from '../Movie/SceneMovie';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -45,6 +46,18 @@ class ContainerProfile extends React.Component {
           moviesAdded={this.state.moviesAdded.length}
           seriesAdded={this.state.seriesAdded.length}
           addMovie={this.addMovie}/>
+        {this.state.moviesAdded.map((movie, index) =>{
+          return (
+            <SceneMovie key = {index}
+                        title = {movie.title}
+                        dateProduction={movie.dateProduction}
+                        category={movie.category}
+                        actor={movie.actors}
+                        dateAdd={movie.dateAdd}
+                        link={movie.linkDownload}
+          />
+          )
+        })}
         {this.props.children}
       </div>
 
