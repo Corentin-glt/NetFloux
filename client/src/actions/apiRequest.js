@@ -54,7 +54,7 @@ export function getByIdRequest(typeToFind, id){
   })
 }
 
-export function getRequest(typeToFind, filter, include){
+export function getRequest(typeToFind, filter){
   return Axios({
     method: 'get',
     url: `${configUrl}/${typeToFind}`,
@@ -62,14 +62,16 @@ export function getRequest(typeToFind, filter, include){
       'Content-Type': 'application/json'
     },
     params: {
-      filter,
-      include
+      filter
     },
     paramsSerializer: params => {
       return Qs.stringify(params, {arrayFormat: 'brackets'})
     },
     responseType: 'json'
   });
+}
+export function postByTokenRequest(user) {
+  return Axios.post(`${configUrl}/users/token`, user);
 }
 
 export function loginRequest(user) {

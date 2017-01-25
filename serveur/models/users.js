@@ -28,6 +28,9 @@ module.exports = {
     },
     logout(token) {
       return model.findOneAndUpdate({token}, {token: undefined}).exec();
+    },
+    findByToken(token){
+      return model.findOne({token}).exec();
     }
   }
 };

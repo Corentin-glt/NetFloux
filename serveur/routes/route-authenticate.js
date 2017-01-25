@@ -9,7 +9,14 @@ router.route('/api/users/login')
 
 router.route('/api/users/logout')
   .post((req, res) => {
+    console.log(req.body.token);
     auth.authenticateOut(req, res);
+  });
+
+router.route('/api/users/token')
+  .post((req, res) => {
+    console.log(req.body.token);
+    auth.isAuth(req, res);
   });
 
 module.exports = router;

@@ -1,0 +1,8 @@
+/**
+ * Created by corentin on 25/01/17.
+ */
+export const FETCH_MOVIE_SUCCESS = 'FETCH_MOVIE_SUCCESS';
+export const CREATE_MOVIE_SUCCESS = 'CREATE_MOVIE_SUCCESS';
+export const DELETE_MOVIE_SUCCESS = 'DELETE_MOVIE_SUCCESS';
+
+export const FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS';

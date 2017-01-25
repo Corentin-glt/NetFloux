@@ -35,6 +35,7 @@ class Home extends React.Component {
     let user = {
       token: localStorage.access_token
     };
+
     this.props.logout(user);
   }
 

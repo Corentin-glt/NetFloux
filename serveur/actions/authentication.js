@@ -47,5 +47,25 @@ module.exports = {
         message: 'Token hasn\'t been found!'
       });
     }
+  },
+  isAuth(req, res){
+    const token = req.body.token || req.query.token;
+    if(token){
+      User.actions.findByToken(token)
+      .then(user => {
+        res.status(200).send({
+          user: user
+        });
+      })
+      .catch(err => {
+        res.status(400).send({
+          message:"No user founded"
+        });
+      });
+    } else {
+      res.status(400).send({
+        message: 'Token hasn\'t been found!'
+      });
+    }
   }
 };

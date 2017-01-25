@@ -64,14 +64,27 @@ export const fetchUserById = (user) => {
   return (dispatch) => {
     return requestApi.getByIdRequest('users', user.id)
       .then((response) => {
-        console.log(response.data);
-        dispatch(fetchUserSuccess(response.data));
+        return userSerializer.deserialize(response.data)
+          .then((response) => {
+            dispatch(fetchUserSuccess(response));
+          }).catch(err => console.log(err));
       }) .catch(error => {
         throw(error);
       });
   };
 };
 
+export const fetchUserByToken = (user) => {
+  return (dispatch) => {
+    return requestApi.postByTokenRequest(user)
+      .then((response) => {
+        console.log(response.data.user);
+        dispatch(fetchUserSuccess(response.data.user));
+      }) .catch(error => {
+        throw(error);
+      });
+  };
+};
 export const logout = (user) => {
   return(dispatch) => {
     return requestApi.logoutRequest(user)

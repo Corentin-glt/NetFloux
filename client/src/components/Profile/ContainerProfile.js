@@ -5,14 +5,15 @@ import React from 'react';
 import SceneProfile from './SceneProfile';
 import * as userAction from '../../actions/users/userAction';
 import {connect} from 'react-redux';
-import ContainerAddMovie from './AddMovie/ContainerAddMovie';
 import { browserHistory } from 'react-router';
 
-export default class ContainerProfile extends React.Component {
+class ContainerProfile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-
+      pseudo: '',
+      moviesAdded: [],
+      seriesAdded: []
     };
     this.addMovie = this.addMovie.bind(this);
   }
@@ -21,10 +22,25 @@ export default class ContainerProfile extends React.Component {
     browserHistory.push('/AddMovie');
   }
 
+  componentWillMount(){
+    let user = {
+      token: localStorage.access_token
+    };
+    this.props.fetchUserByToken(user)
+      .then(() => {
+        this.setState({pseudo: this.props.user.data.pseudo});
+        this.setState({moviesAdded: this.props.user.data.movies});
+        this.setState({seriesAdded: this.props.user.data.tvshows});
+    })
+  }
+
   render(){
     return(
       <div className="ContainerProfile">
         <SceneProfile
+          pseudo={this.state.pseudo}
+          moviesAdded={this.state.moviesAdded.length}
+          seriesAdded={this.state.seriesAdded.length}
           addMovie={this.addMovie}/>
         {this.props.children}
       </div>
@@ -32,3 +48,16 @@ export default class ContainerProfile extends React.Component {
     )
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    user: state.user
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ContainerProfile);

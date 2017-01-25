@@ -2,12 +2,16 @@
  * Created by corentin on 24/01/17.
  */
 import React from 'react';
-import {Modal, Button, Form, Header} from 'semantic-ui-react';
+import {Modal, Button, Form, Header, Message} from 'semantic-ui-react';
 import DatePicker from 'react-datepicker';
 require('react-datepicker/dist/react-datepicker.css');
 
 export default class SceneAddMovie extends React.Component {
   render(){
+    let labelErrorMessage;
+    if (this.props.errorMessage){
+      labelErrorMessage = <Message warning>{this.props.errorMessage}</Message>
+    }
     return (
       <div className="SceneAddMovie">
         <Modal
@@ -35,9 +39,20 @@ export default class SceneAddMovie extends React.Component {
                 <label>Date production</label>
                 <div>
                   <DatePicker placeholderText="Click to select a date"
-                              selected={this.props.startDate}
+                              selected={this.props.dateProduction}
                               onChange={this.props.updateDate}/>
                 </div>
+              </Form.Field>
+              <Form.Field>
+                <label>Category</label>
+                <select multiple=""
+                        className="ui dropdown"
+                        onChange={this.props.updateCategory}>
+                  <option value="">Select Category</option>
+                  <option value="Vostfr">Vostfr</option>
+                  <option value="Vf">Vf</option>
+                  <option value="Blueray">Blueray</option>
+                </select>
               </Form.Field>
               <Form.Field>
                 <label>Link download</label>
@@ -57,6 +72,7 @@ export default class SceneAddMovie extends React.Component {
                   Save</Button>
               </Button.Group>
             </Modal.Actions>
+            {labelErrorMessage}
           </Modal.Content>
         </Modal>
       </div>

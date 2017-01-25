@@ -25,9 +25,9 @@ export default (state = initialState.user, action) => {
 
     case C.FETCH_USER_SUCCESS:
       return{
-        data: action.user.data.attributes,
-        id: action.user.data.id,
-        token: action.user.data.attributes.token,
+        data: action.user,
+        id: action.user.id,
+        token: action.user.token,
         session: !!localStorage.access_token
       };
 

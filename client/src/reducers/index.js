@@ -3,7 +3,9 @@
  */
 import { combineReducers } from 'redux';
 import user from './users/userReducer';
+import movies from './movies/moviesReducers';
 
 export default combineReducers({
-  user: user
+  user: user,
+  movies: movies
 });
