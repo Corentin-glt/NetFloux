@@ -18,6 +18,15 @@ export default (state = initialState.movies, action) => {
       browserHistory.push('/Profile');
       return action.movies;
 
+    case C.DELETE_MOVIE_SUCCESS:
+      const newState = Object.assign([], state);
+      const indexOfMovieToDelete = state.findIndex(movie => {
+        return movie.id == action.movie.id
+      });
+      newState.splice(indexOfMovieToDelete, 1);
+      browserHistory.push('/Profile');
+      return newState;
+
     default:
       return state;
 

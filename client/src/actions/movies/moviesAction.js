@@ -19,6 +19,13 @@ export const fetchAllMovieByUserSuccess = (movies) => {
   }
 };
 
+export const deleteMovieSuccess = (movie) => {
+  return {
+    type: C.DELETE_MOVIE_SUCCESS,
+    movie
+  }
+};
+
 export const createMovie = (movie) => {
   return(dispatch) => {
     const data = movieSerializer.serialize(movie);
@@ -42,12 +49,27 @@ export const fetchAllMovieByUser = (user) => {
     let filter = {simple: {users: {_id: user.data._id}}};
     return requestApi.getRequest('movies', filter, 'users')
       .then((response) => {
-        let moviesTab = [];
-        response.data.data.map(movie => {
-          moviesTab.push(movie.attributes);
-        });
-        dispatch(fetchAllMovieByUserSuccess(moviesTab));
+        const moviesTab = [];
+          return movieSerializer.deserialize(response.data)
+            .then(response => {
+              response.map(movie => {
+                moviesTab.push(movie);
+              });
+              dispatch(fetchAllMovieByUserSuccess(moviesTab));
+            })
+            .catch(err => {throw(err)});
     })
+      .catch(err => {throw(err)});
+  }
+};
+
+export const deleteMovie = (movie) => {
+  return(dispatch) => {
+    return requestApi.deleteRequest('movies', movie.id)
+      .then(() => {
+        console.log('Movie: ' + movie.id + ' deleted!');
+        dispatch(deleteMovieSuccess(movie));
+      })
       .catch(err => {throw(err)});
   }
 };

@@ -30,8 +30,8 @@ module.exports = {
     const token = req.body.token || req.query.token;
     if (token) {
       jwt.verify(token, config.secret, (err, decoded) => {
-        if (err) {
-          return res.status(400).send(err || err.error);
+        if (err && err.message !== 'jwt expired') {
+          return res.status(400).send({message: err});
         } else {
           return User.actions.logout(token)
             .then(() => {

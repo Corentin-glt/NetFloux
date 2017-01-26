@@ -15,10 +15,10 @@ class ContainerAddMovie extends React.Component{
     this.state = {
       modalOpen: true,
       dateProduction: moment(),
-      title: '',
-      actor: '',
-      category: '',
-      link: '',
+      title: null,
+      actor: null,
+      category: null,
+      link: null,
       errorMessage: null
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -59,10 +59,8 @@ class ContainerAddMovie extends React.Component{
   }
 
   saveMovie(){
-    if (this.state.title !== ''
-      || this.state.actor!== ''
-      || this.state.link !== ''
-      || this.state.category !== ''){
+    if (this.state.title && this.state.actor
+      && this.state.link && this.state.category){
       let newMovie = {
         title: this.state.title,
         dateProduction: this.state.dateProduction._d,

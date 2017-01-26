@@ -92,6 +92,7 @@ export const logout = (user) => {
         localStorage.removeItem('access_token');
         dispatch(logoutSuccess())
       }) .catch(error => {
+        console.log(error);
         throw(error);
       })
   }

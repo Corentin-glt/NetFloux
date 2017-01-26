@@ -37,16 +37,18 @@ class ContainerProfile extends React.Component {
     return(
       <div className="ContainerProfile">
         <SceneProfile
-          pseudo={this.state.pseudo}
+          pseudo={this.props.user.data.pseudo}
           moviesAdded={this.props.movies.length}
           seriesAdded={this.state.seriesAdded.length}
           addMovie={this.addMovie}/>
         <Grid columns={4}>
           {this.props.movies.map((movie, index) =>{
+            console.log(movie);
             return (
               <Grid.Column key ={index}>
                 <SceneMovie key = {index}
                             title = {movie.title}
+                            id = {movie.id}
                             dateProduction={movie.dateProduction}
                             category={movie.category}
                             actor={movie.actors}

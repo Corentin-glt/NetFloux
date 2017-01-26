@@ -2,18 +2,22 @@
  * Created by corentin on 25/01/17.
  */
 import React from 'react';
+import {connect} from 'react-redux';
 import {Card, Icon, Button} from 'semantic-ui-react';
+import * as moviesAction from '../../actions/movies/moviesAction';
 
-export default class SceneMovie extends React.Component{
+class SceneMovie extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      id: '',
     };
-    this.deleteMovie = this.deleteMovie.bind(this);
+    this.delete = this.delete.bind(this);
   }
-  deleteMovie(){
-
+  delete(){
+    let movie = {
+      id: this.props.id
+    };
+    this.props.deleteMovie(movie);
   }
   render(){
     return(
@@ -25,7 +29,7 @@ export default class SceneMovie extends React.Component{
               {this.props.title}
             </Card.Header>
             <Card.Meta>
-              {this.props.dateProduction}
+              {this.props.dateProduction}<br/>
               Category: {this.props.category}
             </Card.Meta>
             <Card.Description>
@@ -40,10 +44,24 @@ export default class SceneMovie extends React.Component{
             <a href={this.props.link}>Download</a>
           </Card.Description>
           <Card.Content extra>
-              <Button basic color='red' onClick={this.deleteMovie}>Delete</Button>
+              <Button basic color='red' onClick={this.delete}>Delete</Button>
           </Card.Content>
         </Card>
       </div>
     )
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    movies: state.movies
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteMovie: movie => dispatch(moviesAction.deleteMovie(movie))
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SceneMovie);
