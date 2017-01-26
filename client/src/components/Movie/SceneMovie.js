@@ -36,9 +36,9 @@ export default class SceneMovie extends React.Component{
               Actor: {this.props.actor}
             </Card.Description>
           </Card.Content>
-          <Card.Meta>
+          <Card.Description>
             <a href={this.props.link}>Download</a>
-          </Card.Meta>
+          </Card.Description>
           <Card.Content extra>
               <Button basic color='red' onClick={this.deleteMovie}>Delete</Button>
           </Card.Content>

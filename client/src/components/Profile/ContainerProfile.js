@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import SceneProfile from './SceneProfile';
+import {Grid} from 'semantic-ui-react';
 import * as userAction from '../../actions/users/userAction';
 import * as moviesAction from '../../actions/movies/moviesAction';
 import SceneMovie from '../Movie/SceneMovie';
@@ -13,8 +14,6 @@ class ContainerProfile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      pseudo: '',
-      moviesAdded: [],
       seriesAdded: []
     };
     this.addMovie = this.addMovie.bind(this);
@@ -30,11 +29,7 @@ class ContainerProfile extends React.Component {
     };
     this.props.fetchUserByToken(user)
       .then(() => {
-        this.props.fetchAllMovieByUser(this.props.user).then(() => {
-          this.setState({pseudo: this.props.user.data.pseudo});
-          this.setState({moviesAdded: this.props.movies});
-          this.setState({seriesAdded: this.props.user.data.tvshows});
-        });
+        this.props.fetchAllMovieByUser(this.props.user);
     })
   }
 
@@ -43,21 +38,25 @@ class ContainerProfile extends React.Component {
       <div className="ContainerProfile">
         <SceneProfile
           pseudo={this.state.pseudo}
-          moviesAdded={this.state.moviesAdded.length}
+          moviesAdded={this.props.movies.length}
           seriesAdded={this.state.seriesAdded.length}
           addMovie={this.addMovie}/>
-        {this.state.moviesAdded.map((movie, index) =>{
-          return (
-            <SceneMovie key = {index}
-                        title = {movie.title}
-                        dateProduction={movie.dateProduction}
-                        category={movie.category}
-                        actor={movie.actors}
-                        dateAdd={movie.dateAdd}
-                        link={movie.linkDownload}
-          />
-          )
-        })}
+        <Grid columns={4}>
+          {this.props.movies.map((movie, index) =>{
+            return (
+              <Grid.Column key ={index}>
+                <SceneMovie key = {index}
+                            title = {movie.title}
+                            dateProduction={movie.dateProduction}
+                            category={movie.category}
+                            actor={movie.actors}
+                            dateAdd={movie.dateAdd}
+                            link={movie.linkDownload}
+                />
+              </Grid.Column>
+            )
+          })}
+        </Grid>
         {this.props.children}
       </div>
 
