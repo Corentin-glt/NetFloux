@@ -45,6 +45,12 @@ class ContainerLogin extends React.Component{
       password: this.state.password
     };
     this.props.login(user).then(() => {
+      let newUser  = {
+        token: localStorage.access_token
+      };
+      this.props.fetchUserByToken(newUser).then(()=> {
+        browserHistory.push('/');
+      })
     })
       .catch(err => this.setState({errorMessage: "Wrong pseudo or password!"}));
   }
@@ -72,6 +78,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
+    fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user)),
     login: user => dispatch(userAction.login(user))
   }
 };

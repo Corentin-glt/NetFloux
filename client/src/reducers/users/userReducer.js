@@ -8,7 +8,6 @@ import * as C from '../../actions/users/actionTypes';
 export default (state = initialState.user, action) => {
   switch(action.type){
     case C.LOG_IN_SUCCESS:
-      browserHistory.push('/');
       return {
         token: action.user.access_token,
         id: action.user.account_id,
@@ -26,7 +25,7 @@ export default (state = initialState.user, action) => {
     case C.FETCH_USER_SUCCESS:
       return{
         data: action.user,
-        id: action.user.id,
+        id: action.user._id,
         token: action.user.token,
         session: !!localStorage.access_token
       };
@@ -34,6 +33,7 @@ export default (state = initialState.user, action) => {
     case C.LOG_OUT_SUCCESS:
       browserHistory.push('/');
       return {
+        data: undefined,
         token: undefined,
         id: undefined,
         session: !!localStorage.access_token

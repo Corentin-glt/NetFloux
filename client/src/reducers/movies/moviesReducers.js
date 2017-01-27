@@ -15,7 +15,11 @@ export default (state = initialState.movies, action) => {
       ];
 
     case C.FETCH_MOVIES_SUCCESS:
-      browserHistory.push('/Profile');
+      if(action.imNotUser){
+        browserHistory.push('/Movie');
+      } else{
+        browserHistory.push('/Profile');
+      }
       return action.movies;
 
     case C.DELETE_MOVIE_SUCCESS:

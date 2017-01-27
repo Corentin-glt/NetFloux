@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import SceneProfile from './SceneProfile';
-import {Grid} from 'semantic-ui-react';
+import {Grid, Dimmer, Loader, Label} from 'semantic-ui-react';
 import * as userAction from '../../actions/users/userAction';
 import * as moviesAction from '../../actions/movies/moviesAction';
 import SceneMovie from '../Movie/SceneMovie';
@@ -14,7 +14,9 @@ class ContainerProfile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      seriesAdded: []
+      seriesAdded: [],
+      moviesAdded: 0,
+      loaded: false
     };
     this.addMovie = this.addMovie.bind(this);
   }
@@ -24,16 +26,50 @@ class ContainerProfile extends React.Component {
   }
 
   componentWillMount(){
-    let user = {
-      token: localStorage.access_token
-    };
-    this.props.fetchUserByToken(user)
-      .then(() => {
-        this.props.fetchAllMovieByUser(this.props.user);
-    })
+      let user = {
+        token: localStorage.access_token
+      };
+      this.props.fetchUserByToken(user)
+        .then(() => {
+          if (this.props.user.id !== ("" || undefined)){
+            this.props.fetchAllMovieByUser(this.props.user)
+              .then(()=>{
+                this.setState({moviesAdded: this.props.movies.length});
+                this.setState({loaded: true});
+              })
+          } else {
+
+          }
+        })
   }
 
   render(){
+    let isloaded;
+    if (this.state.loaded && this.props.movies !== 0){
+      isloaded = <Grid columns={4}>
+        {this.props.movies.map((movie, index) => {
+          return(
+            <Grid.Column key ={index}>
+              <SceneMovie key = {index}
+                                 title = {movie.title}
+                                 id = {movie.id}
+                                 dateProduction={movie.dateProduction}
+                                 category={movie.category}
+                                 actor={movie.actors}
+                                 dateAdd={movie.dateAdd}
+                                 link={movie.linkDownload}
+              />
+            </Grid.Column>
+          )
+        })}
+      </Grid>
+    } else if(this.state.loaded && this.props.movies === 0) {
+      isloaded = <Label> 0 movie </Label>
+    } else {
+      isloaded = <Dimmer active>
+        <Loader>Loading</Loader>
+      </Dimmer>
+    }
     return(
       <div className="ContainerProfile">
         <SceneProfile
@@ -41,25 +77,8 @@ class ContainerProfile extends React.Component {
           moviesAdded={this.props.movies.length}
           seriesAdded={this.state.seriesAdded.length}
           addMovie={this.addMovie}/>
-        <Grid columns={4}>
-          {this.props.movies.map((movie, index) =>{
-            console.log(movie);
-            return (
-              <Grid.Column key ={index}>
-                <SceneMovie key = {index}
-                            title = {movie.title}
-                            id = {movie.id}
-                            dateProduction={movie.dateProduction}
-                            category={movie.category}
-                            actor={movie.actors}
-                            dateAdd={movie.dateAdd}
-                            link={movie.linkDownload}
-                />
-              </Grid.Column>
-            )
-          })}
-        </Grid>
         {this.props.children}
+        {isloaded}
       </div>
 
     )

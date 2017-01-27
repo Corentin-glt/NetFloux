@@ -78,10 +78,15 @@ export const fetchUserByToken = (user) => {
   return (dispatch) => {
     return requestApi.postByTokenRequest(user)
       .then((response) => {
-        console.log(response.data.user);
-        dispatch(fetchUserSuccess(response.data.user));
-      }) .catch(error => {
-        throw(error);
+        return userSerializer.deserialize(response)
+          .then(() => {
+            console.log(response.data);
+            dispatch(fetchUserSuccess(response.data.user));
+        }).catch(err => {throw(err)});
+
+      })
+      .catch(err => {
+        throw(err);
       });
   };
 };
