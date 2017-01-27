@@ -1,51 +1,79 @@
 /**
  * Created by corentin on 21/01/17.
  */
-import React from 'react';
-import { Form } from 'semantic-ui-react';
+import _ from 'lodash';
+import React  from 'react';
+import {connect} from 'react-redux';
+import { Search, Grid, Header } from 'semantic-ui-react'
+import * as moviesAction from '../../actions/movies/moviesAction';
 
-export default class SceneSearch extends React.Component{
-  render(){
+
+class SceneSearch extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      isLoading: false,
+      results: [],
+      value: ''
+    };
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.resetComponent = this.resetComponent.bind(this);
+  }
+
+  resetComponent (){
+    this.setState({ isLoading: false, results: [], value: '' });
+  }
+
+  handleResultSelect(result){
+    this.setState({ value: result.title });
+  }
+
+  handleSearchChange(value) {
+    this.setState({ isLoading: true});
+    this.setState({value: value.target.value});
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent();
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+      const isMatch = (result) => re.test(result.title);
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(this.props.movies, isMatch)
+      })
+    }, 500)
+  }
+
+  render() {
+
     return (
-      <div className="SceneSearch">
-        <Form>
-          <Form.Group>
-            <Form.Field>
-              <label>{this.props.typeNeed}'s title</label>
-              <Form.Input type="text"
-                     placeholder="Title"
-                     onChange={this.props.updateTitle}>
-              </Form.Input>
-            </Form.Field>
-            <Form.Field>
-              <label>Added date</label>
-              <Form.Input type="text"
-                          placeholder={this.props.valueDateAdded}
-                          onChange={this.props.updateAddedDate}>
-              </Form.Input>
-            </Form.Field>
-            <Form.Field>
-              <label>Production date</label>
-              <input type="text"
-                     placeholder={this.props.valueDateProd}
-                     onChange={this.props.updateProdDate}>
-              </input>
-            </Form.Field>
-            <Form.Field>
-              <label>Category</label>
-              <select multiple=""
-                      className="ui dropdown"
-                      onChange={this.props.updateCategory}>
-                <option value="">Select Category</option>
-                <option value="Vostfr">Vostfr</option>
-                <option value="Vf">Vf</option>
-                <option value="Blueray">Blueray</option>
-              </select>
-            </Form.Field>
-          </Form.Group>
-        </Form>
-      </div>
+      <Grid>
+        <Grid.Column width={8}>
+          {this.props.typeNeed}
+          <Search
+            loading={this.state.isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={this.handleSearchChange}
+            results={this.state.results}
+            value={this.state.value}
 
+          />
+        </Grid.Column>
+      </Grid>
     )
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    movies: state.movies
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchAllMovies: () => dispatch(moviesAction.fetchAllMovies())
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SceneSearch);

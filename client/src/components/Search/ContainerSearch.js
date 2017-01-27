@@ -11,52 +11,13 @@ export default class ContainerSearch extends React.Component {
     super(props);
     this.state = {
       typeNeed: this.props.typeNeed,
-      titleSearch: '',
-      dateAddSearch: new Date(),
-      dateProductionSearch: new Date(),
-      categorySearch: ''
     };
-    this.updateTitleSearch = this.updateTitleSearch.bind(this);
-    this.updateDateAddSearch = this.updateDateAddSearch.bind(this);
-    this.updateDateProductionSearch = this.updateDateProductionSearch.bind(this);
-    this.updateCategorySearch = this.updateCategorySearch.bind(this);
-  }
-  updateTitleSearch(title){
-    this.setState({titleSearch: title.target.value});
-  }
 
-  updateDateAddSearch(dateAdd){
-    this.setState({dateAddSearch: dateAdd.target.value});
-  }
-
-  updateDateProductionSearch(dateProduction){
-    this.setState({dateProductionSearch: dateProduction.target.value});
-  }
-  updateCategorySearch(category){
-    this.setState({categorySearch: category.target.value});
-  }
-  onSubmit(){
-    console.log(this.state.typeNeed);
-    browserHistory.push('/');
   }
   render(){
     return (
       <div className="ContainerSearch">
-        <SceneSearch
-          typeNeed={this.state.typeNeed}
-          updateTitle={this.updateTitleSearch}
-          updateAddedDate={this.updateDateAddSearch}
-          valueDateAdded={this.state.dateAddSearch}
-          valueDateProd={this.state.dateProductionSearch}
-          updateProdDate={this.updateDateProductionSearch}
-          updateCategory={this.updateCategorySearch}
-        /><br/>
-        <Button positive
-                onClick={e => {
-                  e.preventDefault();
-                  this.onSubmit();
-                  //e.target.reset();
-                }}>Submit</Button>
+        <SceneSearch typeNeed={this.state.typeNeed}/><br/>
       </div>
     )
   }

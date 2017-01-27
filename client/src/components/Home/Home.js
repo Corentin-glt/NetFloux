@@ -3,7 +3,7 @@
  */
 import React, {PropTypes} from 'react';
 import ContainerRegister from '../Register/ContainerRegister';
-import { Menu, Button } from 'semantic-ui-react';
+import { Menu, Button, Popup } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import * as userAction from '../../actions/users/userAction';
 import {connect} from 'react-redux';
@@ -53,19 +53,32 @@ class Home extends React.Component {
     if (!this.props.user.session){
       buttonIsLogged =
         <Button.Group>
-          <Button icon="sign in"
-                  onClick={this.renderLogin}/>
-          <Button icon="add user"
-                  onClick={this.renderRegister}/>
+          <Popup
+            trigger={<Button icon="sign in"
+                    onClick={this.renderLogin}/>}
+            content="Here to sign in !"
+            />
+          <Popup
+            trigger={<Button icon="add user"
+                    onClick={this.renderRegister}/>}
+            content="Here to sign up!"
+          />
+
         </Button.Group>;
 
     } else {
       buttonIsLogged =
         <Button.Group>
-          <Button icon="power"
-                  onClick={this.renderLogout}/>
-          <Button icon="cogs"
-                  onClick={this.renderProfile}/>
+          <Popup
+            trigger={<Button icon="power"
+                             onClick={this.renderLogout}/>}
+            content="Here to log out!"
+          />
+          <Popup
+            trigger={<Button icon="cogs"
+                             onClick={this.renderProfile}/>}
+            content=" Your profile"
+          />
         </Button.Group>;
       buttonProfile =
         <Menu.Item name='Profile'
