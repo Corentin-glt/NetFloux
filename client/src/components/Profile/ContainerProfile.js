@@ -19,10 +19,21 @@ class ContainerProfile extends React.Component {
       loaded: false
     };
     this.addMovie = this.addMovie.bind(this);
+    this.deleteProfile = this.deleteProfile.bind(this);
   }
 
   addMovie() {
     browserHistory.push('/AddMovie');
+  }
+  deleteProfile(){
+    if(this.props.movies){
+      this.props.deleteAllMovieOfUser(this.props.movies);
+      this.props.deleteUser(this.props.user);
+
+    } else {
+      this.props.deleteUser(this.props.user);
+    }
+
   }
 
   componentWillMount(){
@@ -76,7 +87,8 @@ class ContainerProfile extends React.Component {
           pseudo={this.props.user.data.pseudo}
           moviesAdded={this.props.movies.length}
           seriesAdded={this.state.seriesAdded.length}
-          addMovie={this.addMovie}/>
+          addMovie={this.addMovie}
+          deleteProfile={this.deleteProfile}/>
         {this.props.children}
         {isloaded}
       </div>
@@ -94,7 +106,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user)),
-    fetchAllMovieByUser: user => dispatch(moviesAction.fetchAllMovieByUser(user))
+    fetchAllMovieByUser: user => dispatch(moviesAction.fetchAllMovieByUser(user)),
+    deleteAllMovieOfUser: movies => dispatch(moviesAction.deleteAllMovieOfUser(movies)),
+    deleteUser: user => dispatch(userAction.deleteUser(user))
   }
 };
 

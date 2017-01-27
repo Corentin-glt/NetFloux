@@ -101,3 +101,16 @@ export const fetchAllMovies = () => {
       .catch(err => {throw(err)});
   }
 };
+
+export const deleteAllMovieOfUser = (movies) => {
+  return (dispatch) => {
+    movies.map(movie => {
+      return requestApi.deleteRequest('movies', movie.id)
+        .then(() => {
+          console.log('Movie: ' + movie.id + ' deleted!');
+          dispatch(deleteMovieSuccess(movie));
+        })
+        .catch(err => {throw(err)});
+    })
+  }
+};

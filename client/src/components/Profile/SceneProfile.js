@@ -36,7 +36,7 @@ export default class SceneProfile extends React.Component {
           <Menu.Item>
             Add series
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item onClick={this.props.deleteProfile}>
             Delete Account
           </Menu.Item>
         </Menu>

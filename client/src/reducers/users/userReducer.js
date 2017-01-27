@@ -39,6 +39,14 @@ export default (state = initialState.user, action) => {
         session: !!localStorage.access_token
       };
 
+    case C.DELETE_SUCCESS:
+      browserHistory.push('/');
+      return {
+        data: undefined,
+        token: undefined,
+        id: undefined,
+        session: !!localStorage.access_token
+      };
     default:
       return state;
   }

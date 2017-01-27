@@ -33,7 +33,5 @@ export default (state = initialState.movies, action) => {
 
     default:
       return state;
-
-
   }
 }

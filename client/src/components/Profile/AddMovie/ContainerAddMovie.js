@@ -107,7 +107,6 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: user => dispatch(userAction.login(user)),
     createMovie: movie => dispatch(moviesAction.createMovie(movie))
   }
 };

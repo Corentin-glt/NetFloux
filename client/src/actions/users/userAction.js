@@ -32,6 +32,12 @@ export const logoutSuccess = () => {
   }
 };
 
+export const deleteUserSuccess = () =>{
+  return {
+    type: C.DELETE_SUCCESS
+  }
+};
+
 export const createUser = (user) => {
   return(dispatch) => {
     const data = userSerializer.serialize(user);
@@ -100,5 +106,16 @@ export const logout = (user) => {
         console.log(error);
         throw(error);
       })
+  }
+};
+
+export const deleteUser = (user) => {
+  return(dispatch) => {
+    return requestApi.deleteRequest('users', user.id)
+      .then(() => {
+        localStorage.removeItem('access_token');
+        dispatch(deleteUserSuccess())
+      })
+      .catch(err => {throw(err)});
   }
 };
