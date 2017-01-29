@@ -73,7 +73,7 @@ class ContainerAddMovie extends React.Component{
       };
       this.props.createMovie(newMovie);
     } else {
-      this.setState({errorMessage: "Please valid all champs"})
+      this.setState({errorMessage: "Please fill all the fields"})
     }
   }
 

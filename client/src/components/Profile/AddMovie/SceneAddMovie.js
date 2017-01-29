@@ -19,9 +19,9 @@ export default class SceneAddMovie extends React.Component {
           onOpen={this.props.handleOpen}
           onClose={this.props.handleClose}
           size='small'>
-          <Header icon='film' content='Which movie will you add ?' />
+          <Header icon='film' content='Which movie do you want to add ?' />
           <Modal.Content>
-            <h3>Please enter the movie's attributes</h3>
+            <h3>Please enter the Movie's details</h3>
             <Form>
               <Form.Field>
                 <label>Title</label>
@@ -36,7 +36,7 @@ export default class SceneAddMovie extends React.Component {
                             onChange={this.props.updateActor}/>
               </Form.Field>
               <Form.Field>
-                <label>Date production</label>
+                <label>Production Date</label>
                 <div>
                   <DatePicker placeholderText="Click to select a date"
                               selected={this.props.dateProduction}

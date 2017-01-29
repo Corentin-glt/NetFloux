@@ -6,7 +6,9 @@ import SceneProfile from './SceneProfile';
 import {Grid, Dimmer, Loader, Label} from 'semantic-ui-react';
 import * as userAction from '../../actions/users/userAction';
 import * as moviesAction from '../../actions/movies/moviesAction';
+import * as tvshowsAction from '../../actions/tvshows/tvshowsAction';
 import SceneMovie from '../Movie/SceneMovie';
+import SceneTvshow from '../TvShow/SceneTvshow';
 import {connect} from 'react-redux';
 import { browserHistory } from 'react-router';
 
@@ -14,17 +16,23 @@ class ContainerProfile extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      seriesAdded: [],
+      seriesAdded: 0,
       moviesAdded: 0,
       loaded: false
     };
     this.addMovie = this.addMovie.bind(this);
+    this.addTvshow = this.addTvshow.bind(this);
     this.deleteProfile = this.deleteProfile.bind(this);
   }
 
   addMovie() {
     browserHistory.push('/AddMovie');
   }
+
+  addTvshow() {
+    browserHistory.push('/AddTvshow');
+  }
+
   deleteProfile(){
     if(this.props.movies){
       this.props.deleteAllMovieOfUser(this.props.movies);
@@ -48,6 +56,11 @@ class ContainerProfile extends React.Component {
                 this.setState({moviesAdded: this.props.movies.length});
                 this.setState({loaded: true});
               })
+            this.props.fetchAllTvshowsByUser(this.props.user)
+              .then(() => {
+                this.setState({seriesAdded: this.props.tvshows.length});
+                this.setState({loaded: true});
+              })
           } else {
 
           }
@@ -56,7 +69,7 @@ class ContainerProfile extends React.Component {
 
   render(){
     let isloaded;
-    if (this.state.loaded && this.props.movies !== 0){
+    if (this.state.loaded && (this.props.movies !== 0 || this.props.tvshows !==0)){
       isloaded = <Grid columns={4}>
         {this.props.movies.map((movie, index) => {
           return(
@@ -73,6 +86,21 @@ class ContainerProfile extends React.Component {
             </Grid.Column>
           )
         })}
+        {this.props.tvshows.map((tvshow, index) => {
+          return(
+            <Grid.Column key = {index}>
+              <SceneTvshow key = {index}
+                                title = {tvshow.title}
+                                id = {tvshow.id}
+                                dateProduction={tvshow.dateProduction}
+                                category={tvshow.category}
+                                actor={tvshow.actors}
+                                dateAdd={tvshow.dateAdd}
+                                link={tvshow.linkDownload}
+              />
+            </Grid.Column>
+            )
+        })}
       </Grid>
     } else if(this.state.loaded && this.props.movies === 0) {
       isloaded = <Label> 0 movie </Label>
@@ -86,8 +114,9 @@ class ContainerProfile extends React.Component {
         <SceneProfile
           pseudo={this.props.user.data.pseudo}
           moviesAdded={this.props.movies.length}
-          seriesAdded={this.state.seriesAdded.length}
+          seriesAdded={this.props.tvshows.length}
           addMovie={this.addMovie}
+          addTvshow={this.addTvshow}
           deleteProfile={this.deleteProfile}/>
         {this.props.children}
         {isloaded}
@@ -99,7 +128,8 @@ class ContainerProfile extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user,
-    movies: state.movies
+    movies: state.movies,
+    tvshows: state.tvshows
   }
 };
 
@@ -108,7 +138,8 @@ const mapDispatchToProps = (dispatch) => {
     fetchUserByToken: user => dispatch(userAction.fetchUserByToken(user)),
     fetchAllMovieByUser: user => dispatch(moviesAction.fetchAllMovieByUser(user)),
     deleteAllMovieOfUser: movies => dispatch(moviesAction.deleteAllMovieOfUser(movies)),
-    deleteUser: user => dispatch(userAction.deleteUser(user))
+    deleteUser: user => dispatch(userAction.deleteUser(user)),
+    fetchAllTvshowsByUser: user => dispatch(tvshowsAction.fetchAllTvshowsByUser(user))
   }
 };
 

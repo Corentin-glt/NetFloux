@@ -33,7 +33,7 @@ export default class SceneProfile extends React.Component {
           <Menu.Item onClick={this.props.addMovie}>
             Add movie
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item onClick={this.props.addTvshow}>
             Add series
           </Menu.Item>
           <Menu.Item onClick={this.props.deleteProfile}>
