@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'semantic-ui-react';
-import Background from '../../images/bobines-films.jpg';
+import Background from '../../images/background-image.png';
 
 export default class ContainerHome extends React.Component {
   
