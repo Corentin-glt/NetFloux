@@ -41,13 +41,13 @@ Login<br />
 </p>
 
 Movie List ( you can see the movie list without being connected): Clik on the Movie Tab
-> You can search by name movies
+> You can search by movies' name 
 <p align="center">
   <img src="https://github.com/Corentin-glt/NetFloux/blob/master/images/movie.png">
 </p>
 
 Serie List ( you can see the serie list without being connected): Clik on the Tvshow Tab
-> You can search by name tvshows
+> You can search by tvshows' name 
 <p align="center">
   <img src="https://github.com/Corentin-glt/NetFloux/blob/master/images/serie.png">
 </p>
