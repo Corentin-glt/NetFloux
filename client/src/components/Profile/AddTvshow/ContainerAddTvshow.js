@@ -15,6 +15,8 @@ class ContainerAddTvshow extends React.Component {
 			errorMessage: null,
 			title: null,
 			actor:null,
+			image: null,
+      description: null,
 			link: null,
 			category: null
 		};
@@ -23,6 +25,8 @@ class ContainerAddTvshow extends React.Component {
 		this.updateTitle = this.updateTitle.bind(this);
 		this.updateActor = this.updateActor.bind(this);
 		this.updateDate = this.updateDate.bind(this);
+		this.updateImage = this.updateImage.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);    
 		this.updateCategory = this.updateCategory.bind(this);
 		this.updateLink = this.updateLink.bind(this);
 		this.saveTvshow = this.saveTvshow.bind(this);
@@ -54,6 +58,14 @@ class ContainerAddTvshow extends React.Component {
 		this.setState({dateProduction: date});  //?
 	}
 
+	updateImage(image) {
+    this.setState({image: image.target.value});
+  }
+
+  updateDescription(description) {
+    this.setState({description: description.target.value});
+  }
+
 	updateCategory(category) {
 		this.setState({category: category.target.value});
 	}
@@ -64,6 +76,8 @@ class ContainerAddTvshow extends React.Component {
 				title : this.state.title,
 				actors: [this.state.actor],
 				dateProduction: this.state.dateProduction._d,  //?
+				image: this.state.image,
+        description: this.state.description,
 				category: this.state.category,
 				linkDownload: this.state.link,
 				users: {
@@ -88,6 +102,8 @@ class ContainerAddTvshow extends React.Component {
 				handleClose = {this.handleClose}
 				updateTitle = {this.updateTitle}
 				updateActor = {this.updateActor}
+				updateImage = {this.updateImage}
+        updateDescription = {this.updateDescription}
 				dateProduction = {this.state.dateProduction}
 				updateDate = {this.updateDate}
 				updateCategory = {this.updateCategory}

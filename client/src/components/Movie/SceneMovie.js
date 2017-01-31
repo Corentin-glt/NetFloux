@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Card, Icon, Button} from 'semantic-ui-react';
+import {Card, Icon, Button, Segment} from 'semantic-ui-react';
 import * as moviesAction from '../../actions/movies/moviesAction';
 
 class SceneMovie extends React.Component{

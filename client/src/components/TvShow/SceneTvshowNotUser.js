@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, Button, Icon, Modal, Header, Image} from 'semantic-ui-react';
+import {Card, Button, Icon, Modal, Header, Image, Divider} from 'semantic-ui-react';
 import * as tvshowAction from '../../actions/tvshows/tvshowsAction';
 import {connect} from 'react-redux';
 
@@ -24,7 +24,7 @@ class SceneTvshowNotUser extends React.Component {
 		return(
 			<div className="SceneTvshow">
 				<Modal trigger={
-					<Card color='teal'>
+					<Card color='yellow'>
 						<Card.Content>
 							<Icon name="film"/>
 							<Card.Header>
@@ -42,24 +42,22 @@ class SceneTvshowNotUser extends React.Component {
 								Actors: {this.props.actor}
 							</Card.Description>
 						</Card.Content>
-						<Card.Description>
-							<a href={this.props.link}>Download</a>
-						</Card.Description>
-						<Card.Content extra>
-							<Button basic color='red' onClick={this.delete}>Delete</Button>
+						 <Card.Content extra style={{"backgroundColor": "#008080"}}>
+							<a style={{"float": "right", "color": "#FFD700"}} href={this.props.link}>Download</a>
 						</Card.Content>
 					</Card>}>
 					<Modal.Header>TVShow Details</Modal.Header>
     			<Modal.Content image>
-      			<Image wrapped size='medium' src='http://semantic-ui.com/images/avatar2/large/rachel.png' />
+      			<Image wrapped size='medium' src={this.props.image} />
       			<Modal.Description>
         			<Header>{this.props.title}</Header>
-			        <p>{this.props.dateProduction}</p><br/>
+			        {this.props.dateProduction}<br/>
 			        <p>Category: {this.props.category}</p>
 			        <p>Movie added by: <strong>{this.props.pseudo}</strong>
               <strong>{this.props.dateAdd}</strong></p>
-			        <p>Is it okay to use this photo?</p>
+			        <p>Description: {this.props.description}</p>
 			        <p>Actor: {this.props.actor}</p>
+			        <Divider section />
          			<a href={this.props.link}>Download</a>
       			</Modal.Description>
     			</Modal.Content>

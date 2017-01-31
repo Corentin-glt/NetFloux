@@ -3,20 +3,24 @@
  */
 import _ from 'lodash';
 import React  from 'react';
+import {connect} from 'react-redux';
 import { Search, Grid, Header } from 'semantic-ui-react'
+import * as moviesAction from '../../actions/movies/moviesAction';
 
 
-export default class SceneSearch extends React.Component {
+class SceneSearch extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      
+      isLoading: false,
+      results: [],
+      value: ''
     };
-    //this.handleResultSelect = this.handleResultSelect.bind(this);
-    //this.handleSearchChange = this.handleSearchChange.bind(this);
-    //this.resetComponent = this.resetComponent.bind(this);
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.resetComponent = this.resetComponent.bind(this);
   }
-/*
+
   resetComponent (){
     this.setState({ isLoading: false, results: [], value: '' });
   }
@@ -40,25 +44,35 @@ export default class SceneSearch extends React.Component {
         results: _.filter(this.props.movies, isMatch)
       })
     }, 500)
-  }*/
+  }
 
   render() {
 
     return (
-      <div className='SceneSearch'>
       <Grid>
         <Grid.Column width={8}>
+          {this.props.typeNeed}
           <Search
-            loading={this.props.isLoading}
-            onResultSelect={this.props.handleResultSelect}
-            onSearchChange={this.props.handleSearchChange}
-            results={this.props.results}
-            value={this.props.value}
-
+            loading={this.state.isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={this.handleSearchChange}
+            results={this.state.results}
+            value={this.state.value}
           />
         </Grid.Column>
       </Grid>
-      </div>
     )
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+    movies: state.movies
+  }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchAllMovies: () => dispatch(moviesAction.fetchAllMovies())
+  }
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SceneSearch);

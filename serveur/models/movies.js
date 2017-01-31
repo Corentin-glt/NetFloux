@@ -9,6 +9,8 @@ const userSchema = Schema({
   users: {type: ObjectId, ref: 'User'},
   dateProduction: {type: Date, required: true},
   actors: [{type: String, required: true}],
+  image: {type: String},
+  description: {type: String},
   category: [{type: String, required: true}],
   linkDownload: {type: String},
 });

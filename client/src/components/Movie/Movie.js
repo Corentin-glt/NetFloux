@@ -14,17 +14,12 @@ class Movie extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      isLoading: false,
-      results: [],
-      value: ''
+      loaded: false
     };
-    this.handleResultSelect = this.handleResultSelect.bind(this);
-    this.handleSearchChange = this.handleSearchChange.bind(this);
     this.resetComponent = this.resetComponent.bind(this);
   }
 
   componentWillMount(){
-    this.resetComponent();
     this.props.fetchAllMovies().then(()=>{
       this.setState({loaded: true});
     });
@@ -33,28 +28,7 @@ class Movie extends React.Component {
     this.setState({ isLoading: false, results: [], value: '' });
   }
 
-  handleResultSelect(e, result){
-    console.log('ecrit');
-    this.setState({ value: result.title });
-  }
-
-  handleSearchChange(e, value) {
-    console.log('je vais chercher');
-    this.setState({ isLoading: true, value});
-    //this.setState({value: e.target.value});
-
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.resetComponent();
-
-      const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-      const isMatch = (result) => re.test(result.title);
-
-      this.setState({
-        isLoading: false,
-        results: _.filter(this.props.movies, isMatch)
-      })
-    }, 500)
-  }
+  
 
   render(){
     let isloaded;
@@ -86,12 +60,7 @@ class Movie extends React.Component {
     }
     return(
       <div className="Movie">
-        <SceneSearch 
-          loading={this.state.isLoading}
-          onResultSelect={this.handleResultSelect}
-          onSearchChange={this.handleSearchChange}
-          results={this.state.results}
-          value={this.state.value}/>
+        <ContainerSearch typeNeed='Movie'/>
         {isloaded}
       </div>
     )

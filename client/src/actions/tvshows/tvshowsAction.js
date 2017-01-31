@@ -103,5 +103,16 @@ export const deleteTvshow = (tvshow) => {
 	}
 };
 
-
+export const deleteAllTvshowOfUser = (tvshows) => {
+  return (dispatch) => {
+    tvshows.map(tvshow => {
+      return requestApi.deleteRequest('tvshows', tvshow.id)
+        .then(() => {
+          console.log('Tvshow: ' + tvshow.id + ' deleted!');
+          dispatch(deleteTvshowSuccess(tvshow));
+        })
+        .catch(err => {throw(err)});
+    })
+  }
+};
 

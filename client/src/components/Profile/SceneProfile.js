@@ -2,7 +2,7 @@
  * Created by corentin on 24/01/17.
  */
 import React from 'react';
-import {Menu, Label} from 'semantic-ui-react';
+import {Menu, Label, Grid} from 'semantic-ui-react';
 
 export default class SceneProfile extends React.Component {
   render(){
@@ -21,6 +21,7 @@ export default class SceneProfile extends React.Component {
     return (
       <div className="SceneProfile">
         <h1>Hey {this.props.pseudo} !</h1>
+        <Grid.Column >
         <Menu inverted vertical attached='top'>
           <Menu.Item>
             {labelSerieAdded}
@@ -40,6 +41,7 @@ export default class SceneProfile extends React.Component {
             Delete Account
           </Menu.Item>
         </Menu>
+        </Grid.Column>
       </div>
     )
   }

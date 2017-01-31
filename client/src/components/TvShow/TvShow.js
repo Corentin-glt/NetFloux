@@ -6,7 +6,7 @@ import ContainerSearch from '../Search/ContainerSearch';
 import SceneTvshowNotUser from './SceneTvshowNotUser';
 import * as tvshowAction from '../../actions/tvshows/tvshowsAction';
 import {connect} from 'react-redux';
-import {Grid, Loader, Dimmer} from 'semantic-ui-react';
+import {Grid, Loader, Dimmer, Search} from 'semantic-ui-react';
 import SceneSearch from '../Search/SceneSearch';
 
 class TvShow extends React.Component {
@@ -14,8 +14,14 @@ class TvShow extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			loaded: false
+			loaded: false,
+      isLoading: false,
+      results: [],
+      value: ''
 		};
+    this.handleResultSelect = this.handleResultSelect.bind(this);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.resetComponent = this.resetComponent.bind(this);
 	}
 
 	componentWillMount() {
@@ -24,6 +30,31 @@ class TvShow extends React.Component {
 			this.setState({loaded: true});
 		});
 	}
+
+  resetComponent (){
+    this.setState({ isLoading: false, results: [], value: '' });
+  }
+
+  handleResultSelect(result){
+    this.setState({ value: result.title });
+  }
+
+  handleSearchChange(value) {
+    this.setState({ isLoading: true});
+    this.setState({value: value.target.value});
+
+    setTimeout(() => {
+      if (this.state.value.length < 1) return this.resetComponent();
+
+      const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
+      const isMatch = (result) => re.test(result.title);
+
+      this.setState({
+        isLoading: false,
+        results: _.filter(this.props.tvshows, isMatch)
+      })
+    }, 500)
+  }
 
   render(){
   	let isLoaded;
@@ -39,7 +70,9 @@ class TvShow extends React.Component {
   																actor = {tvshow.actors}
   																category = {tvshow.category}
   																link = {tvshow.linkDownload}
-  																dateAdd = {tvshow.dateAdd}/>
+  																dateAdd = {tvshow.dateAdd}
+                                  image= {tvshow.image}
+                                  description = {tvshow.description}/>
   					</Grid.Column>
   					)
   			})}
@@ -53,7 +86,18 @@ class TvShow extends React.Component {
 
     return(
       <div className="TvShow">
-        <SceneSearch />
+        <Grid>
+        <Grid.Column width={8}>
+          {this.props.typeNeed}
+          <Search
+            loading={this.state.isLoading}
+            onResultSelect={this.handleResultSelect}
+            onSearchChange={this.handleSearchChange}
+            results={this.state.results}
+            value={this.state.value}
+          />
+        </Grid.Column>
+      </Grid>
         {isLoaded}
       </div>
     )

@@ -23,10 +23,10 @@ class SceneTvshow extends React.Component {
 	render() {
 		return(
 			<div className="SceneTvshow">
-				<Card color='teal'>
+				<Card color='teal' style={{"marginTop": "5%"}}>
 					<Card.Content>
-						<Icon name="film"/>
 						<Card.Header>
+							<Icon name="film"/>
 							{this.props.title}
 						</Card.Header>
 						<Card.Meta>
@@ -34,7 +34,7 @@ class SceneTvshow extends React.Component {
 							Category: {this.props.category}
 						</Card.Meta>
 						<Card.Description>
-							TVShow added by: <strong>{this.props.pseudo}</strong> <br/>
+							TVShow added by: <strong>{this.props.pseudo}</strong>
 							<strong>{this.props.dateAdd}</strong>
 						</Card.Description>
 						<Card.Description>
@@ -42,10 +42,10 @@ class SceneTvshow extends React.Component {
 						</Card.Description>
 					</Card.Content>
 					<Card.Description>
-						<a href={this.props.link}>Download</a>
+						<a href={this.props.link} style={{ "float": "right", "fontSize": "17px", "marginRight": "2%", "paddingBottom": "3%"}}>Download</a>
 					</Card.Description>
-					<Card.Content extra>
-						<Button basic color='red' onClick={this.delete}>Delete</Button>
+					<Card.Content extra style={{"backgroundColor": "#008080"}}>
+						<Button inverted color='yellow' style={{"float": "right"}} onClick={this.delete}>Delete</Button>
 					</Card.Content>
 				</Card>
 			</div>

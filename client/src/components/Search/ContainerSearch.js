@@ -10,11 +10,15 @@ export default class ContainerSearch extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-    //  typeNeed: this.props.typeNeed,
+      typeNeed: this.props.typeNeed,
     };
 
   }
   render(){
-   
+   return (
+      <div className="ContainerSearch">
+        <SceneSearch typeNeed={this.state.typeNeed}/><br/>
+      </div>
+    )
   }
 }

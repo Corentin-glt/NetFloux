@@ -32,6 +32,8 @@ export const tvshowSerializer = {
         'users',
         'dateProduction',
         'actors',
+        'image',
+        'description',
         'category',
         'linkDownload',
         'numberSeason',

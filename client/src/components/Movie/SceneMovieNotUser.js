@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Card, Icon, Modal, Button,Header, Image} from 'semantic-ui-react';
+import {Card, Icon, Modal, Button,Header, Image, Divider} from 'semantic-ui-react';
 import * as moviesAction from '../../actions/movies/moviesAction';
 
 class SceneMovieNotUser extends React.Component{
@@ -23,7 +23,7 @@ class SceneMovieNotUser extends React.Component{
     return(
       <div className="SceneMovie">
         <Modal trigger={
-          <Card color='teal'>
+          <Card color='yellow'>
             <Card.Content>
               <Icon name="film"/>
               <Card.Header>
@@ -41,9 +41,9 @@ class SceneMovieNotUser extends React.Component{
                 Actor: {this.props.actor}
               </Card.Description>
             </Card.Content>
-            <Card.Description>
-              <a href={this.props.link}>Download</a>
-            </Card.Description>
+            <Card.Content extra style={{"backgroundColor": "#008080"}}>
+              <a style={{"float": "right", "color": "#FFD700"}} href={this.props.link}>Download</a>
+            </Card.Content>
           </Card>}>
             <Modal.Header>Movie Details</Modal.Header>
             <Modal.Content image>
@@ -56,6 +56,7 @@ class SceneMovieNotUser extends React.Component{
                     <strong>{this.props.dateAdd}</strong></p>
               <p>Description: {this.props.description}</p>
               <p>Actor: {this.props.actor}</p>
+              <Divider section />
               <a href={this.props.link}>Download</a>
             </Modal.Description>
           </Modal.Content>
