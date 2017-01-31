@@ -44,7 +44,7 @@ export default class SceneLogin extends React.Component{
                 <Button.Or />
                 <Button positive
                         onClick={this.props.sendLogin}>
-                  Save</Button>
+                  Login</Button>
               </Button.Group>
             </Modal.Actions>
           </Modal.Content>

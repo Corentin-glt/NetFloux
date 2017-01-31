@@ -2,7 +2,7 @@
  * Created by corentin on 24/01/17.
  */
 import React from 'react';
-import {Menu, Label} from 'semantic-ui-react';
+import {Menu, Label, Grid} from 'semantic-ui-react';
 
 export default class SceneProfile extends React.Component {
   render(){
@@ -20,8 +20,9 @@ export default class SceneProfile extends React.Component {
     }
     return (
       <div className="SceneProfile">
-        <h1>It's you {this.props.pseudo}</h1>
-        <Menu vertical attached='top'>
+        <h1>Hey {this.props.pseudo} !</h1>
+        <Grid.Column >
+        <Menu inverted vertical attached='top'>
           <Menu.Item>
             {labelSerieAdded}
             Tv-Shows added
@@ -33,13 +34,14 @@ export default class SceneProfile extends React.Component {
           <Menu.Item onClick={this.props.addMovie}>
             Add movie
           </Menu.Item>
-          <Menu.Item>
+          <Menu.Item onClick={this.props.addTvshow}>
             Add series
           </Menu.Item>
           <Menu.Item onClick={this.props.deleteProfile}>
             Delete Account
           </Menu.Item>
         </Menu>
+        </Grid.Column>
       </div>
     )
   }

@@ -3,10 +3,11 @@
  */
 import React, {PropTypes} from 'react';
 import ContainerRegister from '../Register/ContainerRegister';
-import { Menu, Button, Popup } from 'semantic-ui-react';
+import { Menu, Button, Popup, Image } from 'semantic-ui-react';
 import { browserHistory } from 'react-router';
 import * as userAction from '../../actions/users/userAction';
 import {connect} from 'react-redux';
+import Background from '../../images/bobines-films.jpg';
 
 class Home extends React.Component {
   constructor(props){
@@ -86,6 +87,7 @@ class Home extends React.Component {
                    onClick={this.handleItemClick}>
       </Menu.Item>
     }
+
     return(
       <div className="Home">
         <Menu pointing secondary>

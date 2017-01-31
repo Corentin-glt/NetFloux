@@ -13,6 +13,8 @@ const userSchema = Schema({
   dateProduction: {type: Date, required: true},
   category: [{type: String, required: true}],
   actors: [{type: String, required: true}],
+  image: {type: String},
+  description: {type: String},
   linkDownload: {type: String},
   numberSeason: {type: Number},
   numberEpisode: {type: Number},

@@ -58,7 +58,6 @@ class SceneSearch extends React.Component {
             onSearchChange={this.handleSearchChange}
             results={this.state.results}
             value={this.state.value}
-
           />
         </Grid.Column>
       </Grid>

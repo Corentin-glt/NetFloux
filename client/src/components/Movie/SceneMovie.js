@@ -1,9 +1,9 @@
-/**
+ /**
  * Created by corentin on 25/01/17.
  */
 import React from 'react';
 import {connect} from 'react-redux';
-import {Card, Icon, Button} from 'semantic-ui-react';
+import {Card, Icon, Button, Segment} from 'semantic-ui-react';
 import * as moviesAction from '../../actions/movies/moviesAction';
 
 class SceneMovie extends React.Component{
@@ -22,10 +22,10 @@ class SceneMovie extends React.Component{
   render(){
     return(
       <div className="SceneMovie">
-        <Card>
-          <Card.Content>
-            <Icon name="film"/>
+        <Card color='teal' style={{"marginTop": "5%"}}>
+          <Card.Content>         
             <Card.Header>
+              <Icon name="film"/>
               {this.props.title}
             </Card.Header>
             <Card.Meta>
@@ -41,10 +41,10 @@ class SceneMovie extends React.Component{
             </Card.Description>
           </Card.Content>
           <Card.Description>
-            <a href={this.props.link}>Download</a>
+            <a href={this.props.link} style={{ "float": "right", "fontSize": "17px", "marginRight": "2%", "paddingBottom": "3%"}}>Download</a>
           </Card.Description>
-          <Card.Content extra>
-            <Button basic color='red' onClick={this.delete}>Delete</Button>
+          <Card.Content extra style={{"backgroundColor": "#008080"}}>
+            <Button inverted color='yellow' style={{"float": "right"}} onClick={this.delete}>Delete</Button>
           </Card.Content>
         </Card>
       </div>

@@ -17,6 +17,8 @@ class ContainerAddMovie extends React.Component{
       dateProduction: moment(),
       title: null,
       actor: null,
+      image: null,
+      description: null,
       category: null,
       link: null,
       errorMessage: null
@@ -25,6 +27,8 @@ class ContainerAddMovie extends React.Component{
     this.handleClose = this.handleClose.bind(this);
     this.updateTitle = this.updateTitle.bind(this);
     this.updateDate = this.updateDate.bind(this);
+    this.updateImage = this.updateImage.bind(this);
+    this.updateDescription = this.updateDescription.bind(this);    
     this.updateActor = this.updateActor.bind(this);
     this.updateCategory = this.updateCategory.bind(this);
     this.updateLink = this.updateLink.bind(this);
@@ -46,6 +50,15 @@ class ContainerAddMovie extends React.Component{
   updateDate(date){
     this.setState({dateProduction: date});
   }
+
+  updateImage(image) {
+    this.setState({image: image.target.value});
+  }
+
+  updateDescription(description) {
+    this.setState({description: description.target.value});
+  }
+
   updateCategory(category){
     this.setState({category: category.target.value});
   }
@@ -65,6 +78,8 @@ class ContainerAddMovie extends React.Component{
         title: this.state.title,
         dateProduction: this.state.dateProduction._d,
         actors: [this.state.actor],
+        image: this.state.image,
+        description: this.state.description,
         linkDownload: this.state.link,
         category: this.state.category,
         users: {
@@ -73,7 +88,7 @@ class ContainerAddMovie extends React.Component{
       };
       this.props.createMovie(newMovie);
     } else {
-      this.setState({errorMessage: "Please valid all champs"})
+      this.setState({errorMessage: "Please fill all the fields"})
     }
   }
 
@@ -87,6 +102,8 @@ class ContainerAddMovie extends React.Component{
           handleClose={this.handleClose}
           handleOpen={this.handleOpen}
           updateTitle={this.updateTitle}
+          updateImage = {this.updateImage}
+          updateDescription = {this.updateDescription}
           updateCategory={this.updateCategory}
           updateLink={this.updateLink}
           updateDate={this.updateDate}

@@ -25,13 +25,15 @@ _Deserializer.deserialize = Promise.promisify(_Deserializer.deserialize);
 
 export const tvshowSerializer = {
   serialize(data) {
-    return new Serializer('movies', {
+    return new Serializer('tvshows', {
       keyForAttribute: 'camelCase',
       attributes: [
         'title',
         'users',
         'dateProduction',
         'actors',
+        'image',
+        'description',
         'category',
         'linkDownload',
         'numberSeason',
