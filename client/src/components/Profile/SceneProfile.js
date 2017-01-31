@@ -20,8 +20,8 @@ export default class SceneProfile extends React.Component {
     }
     return (
       <div className="SceneProfile">
-        <h1>It's you {this.props.pseudo}</h1>
-        <Menu vertical attached='top'>
+        <h1>Hey {this.props.pseudo} !</h1>
+        <Menu inverted vertical attached='top'>
           <Menu.Item>
             {labelSerieAdded}
             Tv-Shows added

@@ -23,7 +23,7 @@ class SceneTvshow extends React.Component {
 	render() {
 		return(
 			<div className="SceneTvshow">
-				<Card>
+				<Card color='teal'>
 					<Card.Content>
 						<Icon name="film"/>
 						<Card.Header>

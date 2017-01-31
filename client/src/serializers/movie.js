@@ -25,6 +25,8 @@ export const movieSerializer = {
         'users',
         'dateProduction',
         'actors',
+        'image',
+        'description',
         'category',
         'linkDownload'
       ],

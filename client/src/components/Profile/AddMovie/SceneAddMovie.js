@@ -44,6 +44,18 @@ export default class SceneAddMovie extends React.Component {
                 </div>
               </Form.Field>
               <Form.Field>
+                <label>Movie Poster</label>
+                <Form.Input type="text"
+                            placeholder='Insert a source to the image'
+                            onChange={this.props.updateImage}/>
+              </Form.Field>
+              <Form.Field>
+                <label>Synopsis</label>
+                <Form.Input type="text"
+                            placeholder='About'
+                            onChange={this.props.updateDescription}/>
+              </Form.Field>
+              <Form.Field>
                 <label>Category</label>
                 <select multiple=""
                         className="ui dropdown"

@@ -7,6 +7,7 @@ import SceneTvshowNotUser from './SceneTvshowNotUser';
 import * as tvshowAction from '../../actions/tvshows/tvshowsAction';
 import {connect} from 'react-redux';
 import {Grid, Loader, Dimmer} from 'semantic-ui-react';
+import SceneSearch from '../Search/SceneSearch';
 
 class TvShow extends React.Component {
 
@@ -52,7 +53,7 @@ class TvShow extends React.Component {
 
     return(
       <div className="TvShow">
-        <ContainerSearch typeNeed='TvShow'/>
+        <SceneSearch />
         {isLoaded}
       </div>
     )
